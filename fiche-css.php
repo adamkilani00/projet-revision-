@@ -1,0 +1,573 @@
+<?php
+$pageTitle = "CSS";
+require_once 'includes/header.php';
+?>
+
+<<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Fiche CSS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0e17;
+    --card: #1a1927;
+    --card2: #201e30;
+    --accent1: #ff6b6b;
+    --accent2: #ffd93d;
+    --accent3: #6bcb77;
+    --accent4: #4d96ff;
+    --accent5: #c77dff;
+    --text: #fffffe;
+    --muted: #a7a9be;
+    --border: #2e2c42;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 32px 20px;
+    line-height: 1.6;
+  }
+
+  .page { max-width: 960px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 48px 24px 40px;
+    margin-bottom: 36px;
+    position: relative;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1a1927, #201e30);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, #ff6b6b44, transparent 70%);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, #4d96ff44, transparent 70%);
+    border-radius: 50%;
+  }
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .header p {
+    color: var(--muted);
+    font-size: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+  .s1::before { background: var(--accent1); }
+  .s2::before { background: var(--accent2); }
+  .s3::before { background: var(--accent3); }
+  .s4::before { background: var(--accent4); }
+  .s5::before { background: var(--accent5); }
+  .s6::before { background: var(--accent1); }
+  .s7::before { background: var(--accent2); }
+  .s8::before { background: var(--accent3); }
+  .s9::before { background: var(--accent4); }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .s1 h2 { color: var(--accent1); }
+  .s2 h2 { color: var(--accent2); }
+  .s3 h2 { color: var(--accent3); }
+  .s4 h2 { color: var(--accent4); }
+  .s5 h2 { color: var(--accent5); }
+  .s6 h2 { color: var(--accent1); }
+  .s7 h2 { color: var(--accent2); }
+  .s8 h2 { color: var(--accent3); }
+  .s9 h2 { color: var(--accent4); }
+
+  /* ── CODE ── */
+  .code {
+    background: #12111e;
+    border: 1px solid #2e2c42;
+    border-radius: 10px;
+    padding: 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.83rem;
+    line-height: 1.9;
+    margin: 14px 0;
+    overflow-x: auto;
+  }
+  .prop { color: #89b4fa; }
+  .val  { color: #ffd93d; }
+  .sel  { color: #ff6b6b; }
+  .com  { color: #4a4867; font-style: italic; }
+  .ok   { color: #6bcb77; }
+  .no   { color: #ff6b6b; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+  th {
+    background: #12111e;
+    color: var(--muted);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #1e1c2e;
+    color: #d4d4e8;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #12111e; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .b-green { background: #6bcb7722; color: #6bcb77; border: 1px solid #6bcb7744; }
+  .b-red   { background: #ff6b6b22; color: #ff6b6b; border: 1px solid #ff6b6b44; }
+  .b-yellow{ background: #ffd93d22; color: #ffd93d; border: 1px solid #ffd93d44; }
+  .b-blue  { background: #4d96ff22; color: #4d96ff; border: 1px solid #4d96ff44; }
+
+  /* ── TIP / WARNING ── */
+  .tip {
+    background: #4d96ff11;
+    border: 1px solid #4d96ff33;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: #9bc8ff;
+  }
+  .tip strong { color: var(--accent4); }
+
+  .warn {
+    background: #ff6b6b11;
+    border: 1px solid #ff6b6b33;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: #ffaaaa;
+  }
+  .warn strong { color: var(--accent1); }
+
+  .success {
+    background: #6bcb7711;
+    border: 1px solid #6bcb7733;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: #a8e6b0;
+  }
+
+  /* ── TWO COL ── */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px){ .two { grid-template-columns:1fr; } .header h1{font-size:2rem;} }
+
+  /* ── MINI CARD ── */
+  .mini {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .mini h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  /* ── SPECIFICITY BOXES ── */
+  .spec-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
+  .spec-box {
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    min-width: 90px;
+  }
+  .spec-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: block;
+  }
+  .spec-arrow { color: var(--muted); font-size: 1.2rem; }
+
+  code {
+    background: #12111e;
+    color: var(--accent4);
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85em;
+    border: 1px solid #2e2c42;
+  }
+
+  p { margin-bottom: 8px; color: #c5c5dd; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── BOX MODEL VISUAL ── */
+  .box-model {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 16px auto;
+    max-width: 380px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .bm-margin   { background: #ffd93d18; border: 2px dashed #ffd93d55; border-radius: 12px; padding: 16px; width: 100%; text-align: center; color: #ffd93d; position: relative; }
+  .bm-border   { background: #ff6b6b18; border: 2px dashed #ff6b6b55; border-radius: 8px; padding: 14px; width: 100%; text-align: center; color: #ff6b6b; position: relative; }
+  .bm-padding  { background: #6bcb7718; border: 2px dashed #6bcb7755; border-radius: 6px; padding: 12px; width: 100%; text-align: center; color: #6bcb77; position: relative; }
+  .bm-content  { background: #4d96ff22; border: 2px solid #4d96ff55; border-radius: 4px; padding: 10px; width: 100%; text-align: center; color: #4d96ff; font-weight: 600; }
+  .bm-label { font-size: 0.72rem; margin-bottom: 4px; opacity: 0.8; }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🎨 Fiche de Révision — CSS</h1>
+    <p>Tout ce qu'il faut savoir pour l'examen — en français simple !</p>
+  </div>
+
+  <!-- 1. C'EST QUOI LE CSS -->
+  <div class="section s1">
+    <h2>🎯 1. C'est quoi le CSS ?</h2>
+    <p>Le CSS (Cascading Style Sheets) sert à <strong>mettre en forme</strong> les pages HTML : couleurs, tailles, positions, polices…</p>
+    <div class="code">
+<span class="com">/* Syntaxe de base */</span>
+<span class="sel">selecteur</span> {
+  <span class="prop">propriété</span>: <span class="val">valeur</span>;
+  <span class="prop">propriété</span>: <span class="val">valeur</span>;
+}
+
+<span class="com">/* Exemple concret */</span>
+<span class="sel">p</span> {
+  <span class="prop">color</span>: <span class="val">blue</span>;
+  <span class="prop">font-size</span>: <span class="val">16px</span>;
+}
+    </div>
+    <div class="tip"><strong>💡</strong> On écrit le CSS dans un fichier <code>.css</code> séparé, qu'on relie au HTML avec <code>&lt;link rel="stylesheet" href="style.css" /&gt;</code> dans le <code>&lt;head&gt;</code>.</div>
+  </div>
+
+  <!-- 2. SÉLECTEURS -->
+  <div class="section s2">
+    <h2>🎯 2. Les sélecteurs — cibler des éléments</h2>
+    <table>
+      <tr><th>Sélecteur</th><th>Ce qu'il cible</th><th>Exemple</th></tr>
+      <tr><td><code>p</code></td><td>Toutes les balises &lt;p&gt;</td><td><code>p { color: red; }</code></td></tr>
+      <tr><td><code>.maClasse</code></td><td>Tous les éléments avec <code>class="maClasse"</code></td><td><code>.titre { font-size: 2rem; }</code></td></tr>
+      <tr><td><code>#monId</code></td><td>L'élément unique avec <code>id="monId"</code></td><td><code>#header { width: 100%; }</code></td></tr>
+      <tr><td><code>div p</code></td><td>Les &lt;p&gt; qui sont DANS un &lt;div&gt;</td><td><code>div p { color: blue; }</code></td></tr>
+      <tr><td><code>div > p</code></td><td>Les &lt;p&gt; enfants DIRECTS d'un &lt;div&gt;</td><td><code>div > p { margin: 0; }</code></td></tr>
+      <tr><td><code>p, h1</code></td><td>Les &lt;p&gt; ET les &lt;h1&gt; en même temps</td><td><code>p, h1 { font-family: Arial; }</code></td></tr>
+    </table>
+    <div class="warn"><strong>⚠️ Attention :</strong> <code>#container .header p</code> sélectionne un &lt;p&gt; dans un élément avec <code>class="header"</code> qui est dans l'élément avec <code>id="container"</code>.</div>
+  </div>
+
+  <!-- 3. SPÉCIFICITÉ -->
+  <div class="section s3">
+    <h2>⚖️ 3. La spécificité — qui gagne en cas de conflit ?</h2>
+    <p>Quand deux règles CSS s'appliquent au même élément, la plus <strong>spécifique</strong> gagne :</p>
+    <div class="spec-row">
+      <div class="spec-box" style="background:#ff6b6b22;border:2px solid #ff6b6b44;color:#ff6b6b;">
+        <span class="spec-num">4</span>
+        style="..."<br/><small>inline</small>
+      </div>
+      <span class="spec-arrow">›</span>
+      <div class="spec-box" style="background:#c77dff22;border:2px solid #c77dff44;color:#c77dff;">
+        <span class="spec-num">3</span>
+        #id
+      </div>
+      <span class="spec-arrow">›</span>
+      <div class="spec-box" style="background:#4d96ff22;border:2px solid #4d96ff44;color:#4d96ff;">
+        <span class="spec-num">2</span>
+        .classe
+      </div>
+      <span class="spec-arrow">›</span>
+      <div class="spec-box" style="background:#6bcb7722;border:2px solid #6bcb7744;color:#6bcb77;">
+        <span class="spec-num">1</span>
+        balise
+      </div>
+    </div>
+    <div class="code">
+<span class="sel">p</span>            { <span class="prop">color</span>: <span class="val">green</span>; }    <span class="com">← spécificité 1 (balise)</span>
+<span class="sel">.texte</span>       { <span class="prop">color</span>: <span class="val">blue</span>; }     <span class="com">← spécificité 2 (classe) ✅ gagne sur balise</span>
+<span class="sel">#titre</span>       { <span class="prop">color</span>: <span class="val">red</span>; }      <span class="com">← spécificité 3 (id) ✅ gagne sur classe</span>
+style=<span class="val">"color:pink"</span>               <span class="com">← spécificité 4 (inline) ✅ gagne sur tout</span>
+<span class="prop">color</span>: <span class="val">orange <span class="ok">!important</span></span>       <span class="com">← force la priorité absolue</span>
+    </div>
+    <div class="warn"><strong>⚠️ Affirmation FAUSSE à l'exam :</strong> "l'attribut style est prioritaire sur l'id qui est prioritaire sur la class qui est prioritaire sur le nom de balise" → C'est en fait <strong>VRAI</strong> ! Ne pas se faire piéger.</div>
+  </div>
+
+  <!-- 4. LE BOX MODEL -->
+  <div class="section s4">
+    <h2>📦 4. Le modèle de boîte (Box Model)</h2>
+    <p>Chaque élément HTML est une boîte avec 4 couches :</p>
+    <div class="box-model">
+      <div class="bm-margin">
+        <div class="bm-label">🟡 MARGIN — espace DEHORS (entre les éléments)</div>
+        <div class="bm-border">
+          <div class="bm-label">🔴 BORDER — la bordure</div>
+          <div class="bm-padding">
+            <div class="bm-label">🟢 PADDING — espace DEDANS (entre contenu et bordure)</div>
+            <div class="bm-content">CONTENU (texte, image...)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="code">
+<span class="sel">.boite</span> {
+  <span class="prop">width</span>: <span class="val">200px</span>;           <span class="com">← largeur du contenu</span>
+  <span class="prop">padding</span>: <span class="val">16px</span>;          <span class="com">← espace intérieur</span>
+  <span class="prop">border</span>: <span class="val">2px solid black</span>; <span class="com">← bordure</span>
+  <span class="prop">margin</span>: <span class="val">10px</span>;           <span class="com">← espace extérieur</span>
+}
+    </div>
+    <div class="tip"><strong>💡 box-sizing: border-box</strong> — avec cette propriété, la width inclut padding + border. Sans elle, la boîte est plus grande que prévu !</div>
+  </div>
+
+  <!-- 5. DISPLAY -->
+  <div class="section s5">
+    <h2>🖥️ 5. La propriété display</h2>
+    <table>
+      <tr><th>Valeur</th><th>Ce que ça fait</th><th>Exemple</th></tr>
+      <tr><td><code>block</code></td><td>Prend toute la largeur, va à la ligne</td><td><code>&lt;div&gt;</code>, <code>&lt;p&gt;</code></td></tr>
+      <tr><td><code>inline</code></td><td>S'insère dans le texte, pas de largeur/hauteur</td><td><code>&lt;span&gt;</code>, <code>&lt;a&gt;</code></td></tr>
+      <tr><td><code>inline-block</code></td><td>Dans le texte MAIS avec largeur/hauteur</td><td>Boutons, badges</td></tr>
+      <tr><td><code>flex</code></td><td>Aligne les enfants en ligne ou colonne</td><td>Navbar, cartes côte à côte</td></tr>
+      <tr><td><code>grid</code></td><td>Organise en grille lignes + colonnes</td><td>Mise en page complexe</td></tr>
+      <tr><td><code>none</code></td><td>Cache l'élément (il disparaît complètement)</td><td>Menu caché</td></tr>
+    </table>
+  </div>
+
+  <!-- 6. FLEXBOX -->
+  <div class="section s6">
+    <h2>📐 6. Flexbox — aligner les éléments</h2>
+    <p>Flexbox sert à aligner des éléments <strong>en ligne ou en colonne</strong> facilement.</p>
+    <div class="code">
+<span class="sel">.container</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;                    <span class="com">← active flexbox</span>
+  <span class="prop">flex-direction</span>: <span class="val">row</span>;             <span class="com">← en ligne (défaut) | column = en colonne</span>
+  <span class="prop">justify-content</span>: <span class="val">center</span>;         <span class="com">← aligne sur l'axe PRINCIPAL</span>
+  <span class="prop">align-items</span>: <span class="val">center</span>;             <span class="com">← aligne sur l'axe SECONDAIRE</span>
+  <span class="prop">gap</span>: <span class="val">16px</span>;                      <span class="com">← espace entre les enfants</span>
+  <span class="prop">flex-wrap</span>: <span class="val">wrap</span>;               <span class="com">← passe à la ligne si pas assez de place</span>
+}
+    </div>
+    <div class="two" style="margin-top:14px;">
+      <div class="mini">
+        <h3>justify-content (axe principal)</h3>
+        <table>
+          <tr><td><code>flex-start</code></td><td>Début</td></tr>
+          <tr><td><code>flex-end</code></td><td>Fin</td></tr>
+          <tr><td><code>center</code></td><td>Centré</td></tr>
+          <tr><td><code>space-between</code></td><td>Espacé (bords inclus)</td></tr>
+          <tr><td><code>space-around</code></td><td>Espacé (avec marges)</td></tr>
+        </table>
+      </div>
+      <div class="mini">
+        <h3>align-items (axe secondaire)</h3>
+        <table>
+          <tr><td><code>flex-start</code></td><td>Haut</td></tr>
+          <tr><td><code>flex-end</code></td><td>Bas</td></tr>
+          <tr><td><code>center</code></td><td>Milieu</td></tr>
+          <tr><td><code>stretch</code></td><td>Étire (défaut)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="warn"><strong>⚠️ Affirmation FAUSSE à l'exam :</strong> "En flex, justify-content aligne horizontalement et align-items verticalement" → C'est FAUX ! Ça dépend de flex-direction. Si direction = column, c'est l'inverse !</div>
+  </div>
+
+  <!-- 7. GRID -->
+  <div class="section s7">
+    <h2>🔲 7. Grid — grille de mise en page</h2>
+    <p>Grid sert à organiser des éléments en <strong>lignes ET colonnes</strong> en même temps.</p>
+    <div class="code">
+<span class="sel">.grille</span> {
+  <span class="prop">display</span>: <span class="val">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="val">1fr 1fr 1fr</span>;  <span class="com">← 3 colonnes égales</span>
+  <span class="prop">grid-template-rows</span>: <span class="val">auto</span>;
+  <span class="prop">gap</span>: <span class="val">20px</span>;                           <span class="com">← espace entre les cases</span>
+}
+    </div>
+    <div class="success">✅ Grid simplifie le responsive design : on peut changer le nombre de colonnes selon la taille de l'écran avec <code>@media</code>.</div>
+  </div>
+
+  <!-- 8. POSITION -->
+  <div class="section s8">
+    <h2>📍 8. La propriété position</h2>
+    <table>
+      <tr><th>Valeur</th><th>Ce que ça fait</th><th>Par rapport à quoi ?</th></tr>
+      <tr><td><code>static</code></td><td>Position normale (défaut)</td><td>Le flux du document</td></tr>
+      <tr><td><code>relative</code></td><td>Se déplace par rapport à sa position normale</td><td>Lui-même</td></tr>
+      <tr><td><code>absolute</code></td><td>Sort du flux, se positionne par rapport au premier parent non-static</td><td>⭐ Premier parent non-static</td></tr>
+      <tr><td><code>fixed</code></td><td>Reste fixe quand on scrolle</td><td>La fenêtre du navigateur</td></tr>
+      <tr><td><code>sticky</code></td><td>Normal jusqu'à un seuil, puis fixe</td><td>La fenêtre (après le seuil)</td></tr>
+    </table>
+    <div class="code">
+<span class="sel">.parent</span> { <span class="prop">position</span>: <span class="val">relative</span>; }  <span class="com">← référence pour l'enfant absolute</span>
+<span class="sel">.enfant</span>  { <span class="prop">position</span>: <span class="val">absolute</span>; <span class="prop">top</span>: <span class="val">10px</span>; <span class="prop">right</span>: <span class="val">10px</span>; }
+    </div>
+    <div class="tip"><strong>💡 position: absolute</strong> = se positionne par rapport au <strong>premier parent qui a une position autre que static</strong>. S'il n'y en a pas, c'est par rapport à la page entière.</div>
+  </div>
+
+  <!-- 9. AUTRES PROPS IMPORTANTES -->
+  <div class="section s9">
+    <h2>🛠️ 9. Propriétés importantes à connaître</h2>
+    <div class="two">
+      <div class="mini">
+        <h3>📝 Texte & Police</h3>
+        <div class="code" style="margin-top:8px;">
+<span class="prop">color</span>: <span class="val">red</span>;
+<span class="prop">font-size</span>: <span class="val">1rem</span>;
+<span class="prop">font-family</span>: <span class="val">Arial</span>;
+<span class="prop">font-weight</span>: <span class="val">bold</span>;
+<span class="prop">text-align</span>: <span class="val">center</span>;
+<span class="prop">text-decoration</span>: <span class="val">none</span>;
+<span class="prop">line-height</span>: <span class="val">1.5</span>;
+        </div>
+      </div>
+      <div class="mini">
+        <h3>📦 Taille & Fond</h3>
+        <div class="code" style="margin-top:8px;">
+<span class="prop">width</span>: <span class="val">100%</span>;
+<span class="prop">height</span>: <span class="val">200px</span>;
+<span class="prop">max-width</span>: <span class="val">1024px</span>;
+<span class="prop">background-color</span>: <span class="val">blue</span>;
+<span class="prop">background</span>: <span class="val">url(img.png)</span>;
+<span class="prop">border-radius</span>: <span class="val">8px</span>;
+<span class="prop">opacity</span>: <span class="val">0.5</span>;
+        </div>
+      </div>
+    </div>
+    <div class="mini" style="margin-top:16px;">
+      <h3>📏 Unités CSS</h3>
+      <table>
+        <tr><th>Unité</th><th>Ce que c'est</th><th>Exemple</th></tr>
+        <tr><td><code>px</code></td><td>Pixel — taille fixe</td><td><code>width: 300px</code></td></tr>
+        <tr><td><code>%</code></td><td>Pourcentage du parent</td><td><code>width: 50%</code></td></tr>
+        <tr><td><code>rem</code></td><td>Relatif à la taille de base (16px)</td><td><code>font-size: 1rem</code></td></tr>
+        <tr><td><code>em</code></td><td>Relatif à la taille du parent</td><td><code>padding: 1em</code></td></tr>
+        <tr><td><code>vh</code></td><td>% de la hauteur de l'écran</td><td><code>height: 100vh</code></td></tr>
+        <tr><td><code>vw</code></td><td>% de la largeur de l'écran</td><td><code>width: 100vw</code></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 10. !IMPORTANT -->
+  <div class="section" style="border-left:5px solid var(--accent5);">
+    <h2 style="color:var(--accent5);">⚡ 10. Pièges d'exam — vrai ou faux ?</h2>
+    <table>
+      <tr><th>Affirmation</th><th>Verdict</th></tr>
+      <tr>
+        <td>En flex, justify-content aligne horizontalement et align-items verticalement</td>
+        <td><span class="badge b-red">❌ FAUX</span> — dépend de flex-direction !</td>
+      </tr>
+      <tr>
+        <td>Grid simplifie le responsive et organise en grille</td>
+        <td><span class="badge b-green">✅ VRAI</span></td>
+      </tr>
+      <tr>
+        <td><code>style="..."</code> est plus prioritaire que <code>#id</code> que <code>.class</code> que balise</td>
+        <td><span class="badge b-green">✅ VRAI</span></td>
+      </tr>
+      <tr>
+        <td><code>position: absolute</code> positionne par rapport à la page entièrement</td>
+        <td><span class="badge b-red">❌ FAUX</span> — par rapport au 1er parent non-static !</td>
+      </tr>
+      <tr>
+        <td><code>#container .header p</code> cible un &lt;p&gt; dans un élément class "header" dans l'id "container"</td>
+        <td><span class="badge b-green">✅ VRAI</span></td>
+      </tr>
+      <tr>
+        <td><code>!important</code> force une propriété à avoir la priorité absolue</td>
+        <td><span class="badge b-green">✅ VRAI</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    🎨 Fiche de révision CSS — Examen Prog Web 2025 • Bonne chance ! 🍀
+  </div>
+
+</div>
+</body>
+</html>

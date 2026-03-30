@@ -1,0 +1,455 @@
+<?php
+$pageTitle = "HTML";
+require_once 'includes/header.php';
+?>
+
+<main class="main-content">
+    <div class="page">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📄 Fiche de Révision — HTML</h1>
+            <p>Tout ce qu'il faut savoir pour l'examen — en français simple !</p>
+        </div>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fiche de révision HTML</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f4ff;
+      color: #222;
+      padding: 30px 20px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.3);
+    }
+    .header h1 { font-size: 2rem; margin-bottom: 6px; }
+    .header p { font-size: 1rem; opacity: 0.85; }
+
+    /* SECTIONS */
+    .section {
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border-left: 5px solid #4f46e5;
+    }
+    .section h2 {
+      font-size: 1.2rem;
+      color: #4f46e5;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section h2 .icon {
+      font-size: 1.4rem;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .code-block .tag { color: #89b4fa; }
+    .code-block .attr { color: #a6e3a1; }
+    .code-block .val { color: #f9e2af; }
+    .code-block .comment { color: #6c7086; font-style: italic; }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.92rem;
+    }
+    th {
+      background: #4f46e5;
+      color: white;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e8eaf6;
+    }
+    tr:nth-child(even) td { background: #f5f5ff; }
+    tr:hover td { background: #ede9fe; }
+
+    /* BADGES */
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: bold;
+    }
+    .badge-ok { background: #d1fae5; color: #065f46; }
+    .badge-no { background: #fee2e2; color: #991b1b; }
+    .badge-warn { background: #fef3c7; color: #92400e; }
+
+    /* TIPS */
+    .tip {
+      background: #ede9fe;
+      border-left: 4px solid #7c3aed;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 0.92rem;
+      color: #3730a3;
+    }
+    .tip strong { color: #4f46e5; }
+
+    .warning {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 0.92rem;
+      color: #7c2d12;
+    }
+
+    /* TWO COLUMNS */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .two-col { grid-template-columns: 1fr; }
+      .header h1 { font-size: 1.5rem; }
+    }
+
+    /* MINI CARD */
+    .mini-card {
+      background: #f5f3ff;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid #ddd6fe;
+    }
+    .mini-card h3 {
+      color: #5b21b6;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+    .mini-card ul {
+      padding-left: 18px;
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.82rem;
+      margin-top: 30px;
+      padding-top: 16px;
+      border-top: 1px solid #ddd;
+    }
+
+    code {
+      background: #ede9fe;
+      color: #5b21b6;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88em;
+    }
+
+    p { line-height: 1.6; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>📄 Fiche de Révision — HTML</h1>
+    <p>Tout ce qu'il faut savoir pour l'examen — en français simple !</p>
+  </div>
+
+  <!-- 1. STRUCTURE DE BASE -->
+  <div class="section">
+    <h2><span class="icon">🏗️</span> 1. La structure de base d'une page HTML</h2>
+    <p>Toute page HTML commence toujours avec cette structure :</p>
+    <div class="code-block">
+<span class="tag">&lt;!doctype html&gt;</span>  <span class="comment">← dit au navigateur : "c'est du HTML5"</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"fr"</span><span class="tag">&gt;</span>  <span class="comment">← langue de la page</span>
+  <span class="tag">&lt;head&gt;</span>  <span class="comment">← infos invisibles (titre, encodage...)</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span> <span class="tag">/&gt;</span>  <span class="comment">← accents et caractères spéciaux</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"viewport"</span> <span class="attr">content</span>=<span class="val">"width=device-width"</span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Titre dans l'onglet<span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>  <span class="comment">← tout ce que l'utilisateur voit</span>
+    ...
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+    </div>
+    <div class="tip">
+      <strong>💡 Astuce :</strong> <code>&lt;head&gt;</code> = invisible (pour le navigateur), <code>&lt;body&gt;</code> = visible (pour l'utilisateur) !
+    </div>
+  </div>
+
+  <!-- 2. BALISES SÉMANTIQUES -->
+  <div class="section">
+    <h2><span class="icon">🧠</span> 2. Balises sémantiques vs génériques</h2>
+    <p>Une balise <strong>sémantique</strong> a un sens, elle décrit ce qu'elle contient. Une balise <strong>générique</strong> ne veut rien dire.</p>
+    <table>
+      <tr><th>Balise</th><th>Sémantique ?</th><th>C'est quoi ?</th></tr>
+      <tr><td><code>&lt;header&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>En-tête de la page</td></tr>
+      <tr><td><code>&lt;nav&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>Menu de navigation</td></tr>
+      <tr><td><code>&lt;main&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>Contenu principal (1 seul par page !)</td></tr>
+      <tr><td><code>&lt;section&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>Section thématique</td></tr>
+      <tr><td><code>&lt;article&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>Contenu indépendant (blog, news...)</td></tr>
+      <tr><td><code>&lt;aside&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>Contenu secondaire / latéral</td></tr>
+      <tr><td><code>&lt;footer&gt;</code></td><td><span class="badge badge-ok">✅ OUI</span></td><td>Pied de page</td></tr>
+      <tr><td><code>&lt;div&gt;</code></td><td><span class="badge badge-no">❌ NON</span></td><td>Boîte générique (block)</td></tr>
+      <tr><td><code>&lt;span&gt;</code></td><td><span class="badge badge-no">❌ NON</span></td><td>Boîte générique (inline)</td></tr>
+    </table>
+    <div class="warning">⚠️ <strong>&lt;aside&gt;</strong> et <strong>&lt;ul&gt;</strong> sont les MOINS appropriés pour la navigation principale !</div>
+  </div>
+
+  <!-- 3. BALISES DE TEXTE -->
+  <div class="section">
+    <h2><span class="icon">✍️</span> 3. Balises de texte</h2>
+    <div class="two-col">
+      <div class="mini-card">
+        <h3>✅ Sémantiques (avec sens)</h3>
+        <ul>
+          <li><code>&lt;h1&gt;</code> à <code>&lt;h6&gt;</code> — Titres</li>
+          <li><code>&lt;p&gt;</code> — Paragraphe</li>
+          <li><code>&lt;strong&gt;</code> — <strong>Important</strong> (gras)</li>
+          <li><code>&lt;em&gt;</code> — <em>Emphase</em> (italique)</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h3>❌ Génériques (juste visuel)</h3>
+        <ul>
+          <li><code>&lt;b&gt;</code> — Gras sans sens</li>
+          <li><code>&lt;i&gt;</code> — Italique sans sens</li>
+          <li><code>&lt;br /&gt;</code> — Saut de ligne</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip"><strong>💡 Retiens :</strong> <code>&lt;strong&gt;</code> = important (pour les lecteurs d'écran aussi), <code>&lt;b&gt;</code> = juste du gras visuel.</div>
+  </div>
+
+  <!-- 4. BALISES AUTO-FERMANTES -->
+  <div class="section">
+    <h2><span class="icon">🔒</span> 4. Balises auto-fermantes</h2>
+    <p>Ces balises n'ont pas de contenu donc elles se ferment toutes seules avec <code>/&gt;</code> :</p>
+    <div class="code-block">
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.png"</span> <span class="attr">alt</span>=<span class="val">"description"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;br /&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"style.css"</span> <span class="tag">/&gt;</span>
+    </div>
+  </div>
+
+  <!-- 5. IMAGES ET RGAA -->
+  <div class="section">
+    <h2><span class="icon">🖼️</span> 5. Images et accessibilité (RGAA)</h2>
+    <p>L'attribut <code>alt</code> est <strong>toujours obligatoire</strong> sur une image. Sa valeur dépend du type d'image :</p>
+    <table>
+      <tr><th>Type d'image</th><th>Valeur de alt</th><th>Exemple</th></tr>
+      <tr><td>🖼️ Image informative</td><td>Description précise</td><td><code>alt="Logo de l'entreprise"</code></td></tr>
+      <tr><td>🎨 Image décorative</td><td>Vide (<code>""</code>)</td><td><code>alt=""</code></td></tr>
+      <tr><td>🔗 Image-lien</td><td>Destination du lien</td><td><code>alt="Retour à l'accueil"</code></td></tr>
+      <tr><td>❌ Sans alt</td><td>—</td><td><span class="badge badge-no">TOUJOURS INVALIDE !</span></td></tr>
+    </table>
+    <div class="code-block">
+<span class="comment">← Image informative</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"logo.png"</span> <span class="attr">alt</span>=<span class="val">"Logo de l'entreprise Dupont"</span> <span class="tag">/&gt;</span>
+
+<span class="comment">← Image décorative</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"deco.png"</span> <span class="attr">alt</span>=<span class="val">""</span> <span class="tag">/&gt;</span>
+
+<span class="comment">← Image sans alt = INVALIDE !</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.png"</span> <span class="tag">/&gt;</span>  ❌
+    </div>
+  </div>
+
+  <!-- 6. LIENS -->
+  <div class="section">
+    <h2><span class="icon">🔗</span> 6. Les liens — balise &lt;a&gt;</h2>
+    <div class="code-block">
+<span class="comment">← Lien vers une page</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"page.html"</span><span class="tag">&gt;</span>Cliquez ici<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">← Lien vers une section de la même page</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"#contact"</span><span class="tag">&gt;</span>Aller à Contact<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">← Lien email</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"mailto:test@mail.com"</span><span class="tag">&gt;</span>Envoyer un email<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">← ERREUR : src n'existe pas sur &lt;a&gt; !</span>
+<span class="tag">&lt;a</span> <span class="attr">src</span>=<span class="val">"page.html"</span><span class="tag">&gt;</span>Lien<span class="tag">&lt;/a&gt;</span>  ❌
+    </div>
+    <div class="warning">⚠️ <code>&lt;a&gt;</code> utilise <strong>href</strong> (pas src !). src c'est pour &lt;img&gt; et &lt;script&gt;.</div>
+  </div>
+
+  <!-- 7. FORMULAIRES -->
+  <div class="section">
+    <h2><span class="icon">📝</span> 7. Les formulaires</h2>
+    <div class="code-block">
+<span class="tag">&lt;form</span> <span class="attr">action</span>=<span class="val">"/signup.php"</span> <span class="attr">method</span>=<span class="val">"post"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label&gt;</span>Nom d'utilisateur<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="attr">name</span>=<span class="val">"username"</span> <span class="attr">required</span> <span class="attr">placeholder</span>=<span class="val">"Votre nom"</span> <span class="tag">/&gt;</span>
+
+  <span class="tag">&lt;label&gt;</span>Mot de passe<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"password"</span> <span class="attr">name</span>=<span class="val">"password"</span> <span class="attr">required</span> <span class="tag">/&gt;</span>
+
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"submit"</span> <span class="attr">value</span>=<span class="val">"Envoyer"</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;/form&gt;</span>
+    </div>
+    <table>
+      <tr><th>Attribut</th><th>Ce que ça fait</th></tr>
+      <tr><td><code>action</code></td><td>Où envoyer les données</td></tr>
+      <tr><td><code>method="get"</code></td><td>Données <strong>dans l'URL</strong> (visible ! Jamais pour les mots de passe)</td></tr>
+      <tr><td><code>method="post"</code></td><td>Données cachées ✅ (pour mots de passe)</td></tr>
+      <tr><td><code>required</code></td><td>Champ obligatoire</td></tr>
+      <tr><td><code>placeholder</code></td><td>Texte indicatif grisé</td></tr>
+      <tr><td><code>disabled</code></td><td>Champ désactivé</td></tr>
+    </table>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="mini-card">
+        <h3>✅ Types d'input valides</h3>
+        <ul>
+          <li><code>type="text"</code> — Texte libre</li>
+          <li><code>type="email"</code> — Valide le format</li>
+          <li><code>type="password"</code> — Cache les caractères</li>
+          <li><code>type="number"</code> — Chiffres</li>
+          <li><code>type="checkbox"</code> — Case à cocher</li>
+          <li><code>type="submit"</code> — Bouton d'envoi</li>
+        </ul>
+      </div>
+      <div class="mini-card">
+        <h3>❌ N'existent PAS</h3>
+        <ul>
+          <li><code>type="secure"</code> ❌</li>
+          <li>Attribut <code>optional</code> ❌</li>
+          <li>Attribut <code>src</code> sur <code>&lt;a&gt;</code> ❌</li>
+          <li>Balise <code>&lt;row&gt;</code> ❌</li>
+          <li>Balise <code>&lt;tcontent&gt;</code> ❌</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. LISTES -->
+  <div class="section">
+    <h2><span class="icon">📋</span> 8. Les listes</h2>
+    <div class="two-col">
+      <div>
+        <div class="code-block">
+<span class="comment">← Liste à puces</span>
+<span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Pomme<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Banane<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="comment">← Liste numérotée</span>
+<span class="tag">&lt;ol&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Premier<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Deuxième<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+        </div>
+      </div>
+      <div>
+        <div class="code-block">
+<span class="comment">← Liste de définitions</span>
+<span class="tag">&lt;dl&gt;</span>
+  <span class="tag">&lt;dt&gt;</span>HTML<span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span>Langage du web<span class="tag">&lt;/dd&gt;</span>
+<span class="tag">&lt;/dl&gt;</span>
+        </div>
+        <div class="warning" style="margin-top:8px;">⚠️ Un <code>&lt;li&gt;</code> doit TOUJOURS être dans un <code>&lt;ul&gt;</code> ou <code>&lt;ol&gt;</code> !</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. TABLEAUX -->
+  <div class="section">
+    <h2><span class="icon">📊</span> 9. Les tableaux</h2>
+    <div class="code-block">
+<span class="tag">&lt;table&gt;</span>
+  <span class="tag">&lt;thead&gt;</span>  <span class="comment">← en-tête du tableau</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th&gt;</span>Nom<span class="tag">&lt;/th&gt;</span>  <span class="comment">← cellule d'en-tête (gras)</span>
+      <span class="tag">&lt;th&gt;</span>Âge<span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/thead&gt;</span>
+  <span class="tag">&lt;tbody&gt;</span>  <span class="comment">← corps du tableau</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;td&gt;</span>Alice<span class="tag">&lt;/td&gt;</span>  <span class="comment">← cellule normale</span>
+      <span class="tag">&lt;td&gt;</span>25<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tbody&gt;</span>
+  <span class="tag">&lt;tfoot&gt;</span>  <span class="comment">← pied du tableau</span>
+    <span class="tag">&lt;tr&gt;</span><span class="tag">&lt;td&gt;</span>Total<span class="tag">&lt;/td&gt;</span><span class="tag">&lt;td&gt;</span>1<span class="tag">&lt;/td&gt;</span><span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tfoot&gt;</span>
+<span class="tag">&lt;/table&gt;</span>
+    </div>
+    <table>
+      <tr><th>Balise</th><th>Rôle</th></tr>
+      <tr><td><code>&lt;table&gt;</code></td><td>Le tableau entier</td></tr>
+      <tr><td><code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code> / <code>&lt;tfoot&gt;</code></td><td>En-tête / Corps / Pied</td></tr>
+      <tr><td><code>&lt;tr&gt;</code></td><td>Une ligne (<strong>T</strong>able <strong>R</strong>ow)</td></tr>
+      <tr><td><code>&lt;th&gt;</code></td><td>Cellule d'en-tête (gras automatique)</td></tr>
+      <tr><td><code>&lt;td&gt;</code></td><td>Cellule normale (<strong>T</strong>able <strong>D</strong>ata)</td></tr>
+    </table>
+  </div>
+
+  <!-- 10. RÈGLES RGAA -->
+  <div class="section">
+    <h2><span class="icon">♿</span> 10. Règles RGAA (Accessibilité)</h2>
+    <table>
+      <tr><th>Règle</th><th>Pourquoi ?</th></tr>
+      <tr><td>Toujours un <code>alt</code> sur <code>&lt;img&gt;</code></td><td>Les lecteurs d'écran lisent le alt</td></tr>
+      <tr><td>Associer <code>&lt;label&gt;</code> aux <code>&lt;input&gt;</code></td><td>Pour savoir à quoi sert le champ</td></tr>
+      <tr><td>Respecter la hiérarchie h1 → h2 → h3</td><td>Structure logique pour la navigation</td></tr>
+      <tr><td>Déclarer la langue : <code>&lt;html lang="fr"&gt;</code></td><td>Le lecteur d'écran lit avec le bon accent</td></tr>
+      <tr><td>Un seul <code>&lt;main&gt;</code> par page</td><td>C'est le contenu principal, unique !</td></tr>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    📚 Fiche de révision HTML — Examen Prog Web 2025 • Bonne chance ! 🍀
+  </div>
+
+</div>
+</body>
+</html>
