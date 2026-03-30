@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiches de Révision Pro - HTML & CSS</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #7c3aed;
+            --dark: #0f0e17;
+            --dark-card: #1a1927;
+            --gray: #a7a9be;
+            --light: #fffffe;
+            --border: #2e2c42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #0a0a0f 100%);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .site-header {
+            background: rgba(15, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--light);
+        }
+
+        .main-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.05));
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--dark-card);
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .card-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .card-body h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-body p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .info-note {
+            background: rgba(79, 70, 229, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .site-footer {
+            background: var(--dark-card);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .header-container { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">📚 FichesPro</span>
+                <span style="color: var(--gray);">| Révisions Web</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="fiche-html.html">HTML</a>
+                <a href="fiche-css.html">CSS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+            <h1>📚 Fiches de Révision</h1>
+            <p>Maîtrisez les fondamentaux du développement web avec nos fiches complètes et professionnelles</p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <span style="background: rgba(79,70,229,0.2); border: 1px solid var(--primary); padding: 0.5rem 1rem; border-radius: 2rem;">HTML5</span>
+                <span style="background: rgba(79,70,229,0.2); border: 1px solid var(--primary); padding: 0.5rem 1rem; border-radius: 2rem;">CSS3</span>
+                <span style="background: rgba(79,70,229,0.2); border: 1px solid var(--primary); padding: 0.5rem 1rem; border-radius: 2rem;">RGAA</span>
+            </div>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📄</div>
+                </div>
+                <div class="card-body">
+                    <h2>HTML</h2>
+                    <p>Structure sémantique, balises essentielles, formulaires, accessibilité RGAA et bonnes pratiques.</p>
+                    <ul style="list-style: none; margin-top: 1rem; color: var(--gray);">
+                        <li>🏗️ Structure de base</li>
+                        <li>🧠 Balises sémantiques</li>
+                        <li>♿ Accessibilité RGAA</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="fiche-html.html" class="btn">Consulter la fiche →</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎨</div>
+                </div>
+                <div class="card-body">
+                    <h2>CSS</h2>
+                    <p>Mise en page, sélecteurs, Flexbox, Grid, Box Model, spécificité et propriétés essentielles.</p>
+                    <ul style="list-style: none; margin-top: 1rem; color: var(--gray);">
+                        <li>🎯 Sélecteurs avancés</li>
+                        <li>⚖️ Spécificité CSS</li>
+                        <li>📦 Box Model</li>
+                        <li>📐 Flexbox & Grid</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="fiche-css.html" class="btn">Consulter la fiche →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-note">
+            <strong>💡 Information :</strong> Ce site est la version statique (HTML/CSS) de mes fiches de révision.<br>
+            La version complète avec PHP est disponible sur GitHub.
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>📚 Fiches de Révision Professionnelles — Examen Prog Web 2026</p>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">Bonne chance pour vos révisions ! 🍀</p>
+    </footer>
+</body>
+</html>
