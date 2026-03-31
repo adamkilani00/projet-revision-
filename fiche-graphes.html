@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche de révision — Graphes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f13;
+    --surface: #16181f;
+    --surface2: #1e2029;
+    --border: #2a2d3a;
+    --text: #e8e9f0;
+    --muted: #7c7f96;
+    --blue: #4d9cff;
+    --blue-bg: #0d1f3a;
+    --green: #3dd68c;
+    --green-bg: #0b2618;
+    --amber: #f5a623;
+    --amber-bg: #2a1c05;
+    --red: #ff5f5f;
+    --red-bg: #2a0d0d;
+    --purple: #a78bfa;
+    --purple-bg: #1a1030;
+    --teal: #2dd4bf;
+    --teal-bg: #0a2220;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    padding: 56px 48px 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(77,156,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    display: inline-block;
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(77,156,255,0.25);
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  header h1 span {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--blue);
+  }
+  .subtitle {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 500px;
+  }
+
+  /* NAV PILLS */
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .nav a:hover {
+    color: var(--text);
+    border-color: var(--blue);
+    background: var(--blue-bg);
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* SECTION CARD */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .section-body {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* DEF BLOCK */
+  .def {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--blue);
+  }
+  .def-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+  .def p { color: var(--text); font-size: 14px; line-height: 1.65; }
+
+  /* NOTE / EXEMPLE */
+  .note {
+    background: var(--green-bg);
+    border: 1px solid rgba(61,214,140,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .note-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 5px;
+  }
+  .note p { color: #a8f0cd; font-size: 14px; }
+
+  .warn {
+    background: var(--amber-bg);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .warn-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 5px;
+  }
+  .warn p { color: #f5d08a; font-size: 14px; }
+
+  /* VOCAB GRID */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .vocab-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+  .vocab-card:hover { border-color: var(--blue); }
+  .vocab-term {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .vocab-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* DIAGRAM SVG */
+  .diagram-wrap {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 16px;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg { display: block; max-width: 100%; }
+
+  /* MATRICE */
+  .mat-wrap { overflow-x: auto; }
+  table.mat {
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  table.mat td, table.mat th {
+    width: 42px; height: 42px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  table.mat th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+  }
+  .c1 { background: var(--blue-bg); color: var(--blue); font-weight: 700; }
+  .c0 { color: #3a3d52; }
+
+  /* LISTE ADJ */
+  .adj-list { display: flex; flex-direction: column; gap: 8px; }
+  .adj-row { display: flex; align-items: center; gap: 0; }
+  .adj-sommet {
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid rgba(77,156,255,0.3);
+    min-width: 44px;
+    text-align: center;
+  }
+  .adj-arrow {
+    padding: 0 10px;
+    color: var(--muted);
+    font-size: 18px;
+  }
+  .adj-voisins { display: flex; gap: 6px; flex-wrap: wrap; }
+  .adj-voisin {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+  }
+  .adj-vide { color: #3a3d52; font-size: 13px; font-style: italic; }
+
+  /* COMPARISON GRID */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .compare-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .compare-card.best { border-color: var(--green); background: var(--green-bg); }
+  .compare-name {
+    font-size: 13px; font-weight: 700; margin-bottom: 8px;
+  }
+  .compare-card.best .compare-name { color: var(--green); }
+  .pro { font-size: 12px; color: var(--green); margin: 3px 0; }
+  .con { font-size: 12px; color: var(--red); margin: 3px 0; }
+  .star { font-size: 11px; background: var(--green); color: #000; padding: 2px 8px; border-radius: 4px; font-weight: 700; margin-bottom: 8px; display: inline-block; }
+
+  /* COMPOSANTES */
+  .comp-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .comp-badge {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* FORMULE */
+  .formula {
+    background: var(--purple-bg);
+    border: 1px solid rgba(167,139,250,0.25);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--purple);
+    line-height: 2;
+  }
+
+  /* RETENIR BLOCK */
+  .retenir {
+    background: linear-gradient(135deg, var(--blue-bg), var(--purple-bg));
+    border: 1px solid rgba(77,156,255,0.3);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .retenir-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 12px;
+  }
+  .retenir ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .retenir li {
+    font-size: 14px;
+    color: #c8d8f0;
+    padding-left: 20px;
+    position: relative;
+  }
+  .retenir li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* ANALOGIE */
+  .analogie {
+    background: var(--teal-bg);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .analogie-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 5px;
+  }
+  .analogie p { color: #99e8e0; font-size: 14px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    header, .nav { padding-left: 20px; padding-right: 20px; }
+    .section-body { padding: 18px 16px; }
+    .section-header { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Informatique — Structures de données</div>
+  <h1>Théorie des <span>Graphes</span></h1>
+  <p class="subtitle">Fiche de révision complète — définitions, propriétés et représentations en mémoire</p>
+</header>
+
+<nav class="nav">
+  <a href="#graphe">1. Graphe orienté</a>
+  <a href="#vocab">2. Vocabulaire</a>
+  <a href="#chemin">3. Chemins</a>
+  <a href="#fermeture">4. Fermeture transitive</a>
+  <a href="#forte">5. Forte connexité</a>
+  <a href="#connexe">6. Connexité simple</a>
+  <a href="#representations">7. Représentations</a>
+</nav>
+
+<main>
+
+  <!-- ===== 1. GRAPHE ORIENTÉ ===== -->
+  <section class="section" id="graphe">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--blue-bg);color:var(--blue)">01</div>
+      <div class="section-title">Graphe orienté</div>
+    </div>
+    <div class="section-body">
+      <div class="def">
+        <div class="def-label">Définition</div>
+        <p>Un <strong>graphe orienté simple</strong> est un couple <strong>G = (E, Γ)</strong> où :<br>
+        — <strong>E</strong> est un ensemble de <strong>sommets</strong> (les "points")<br>
+        — <strong>Γ</strong> est un ensemble d'<strong>arcs</strong> (les "flèches"), chaque arc étant un couple (x, y)</p>
+      </div>
+
+      <div class="analogie">
+        <div class="analogie-label">Analogie concrète</div>
+        <p>Imagine un réseau de villes reliées par des routes à sens unique. Les villes = sommets, les routes = arcs. La flèche indique dans quel sens on peut circuler.</p>
+      </div>
+
+      <div class="diagram-wrap">
+        <svg width="100%" viewBox="0 0 680 180">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <line x1="194" y1="90" x2="276" y2="90" stroke="#4d9cff" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="194" y1="100" x2="276" y2="148" stroke="#4d9cff" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="324" y1="90" x2="406" y2="90" stroke="#4d9cff" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="454" y1="90" x2="536" y2="90" stroke="#4d9cff" stroke-width="2" marker-end="url(#arr)"/>
+          <path d="M560 72 Q605 38 588 88" fill="none" stroke="#4d9cff" stroke-width="2" marker-end="url(#arr)"/>
+          <path d="M324 90 Q340 50 406 90" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+
+          <circle cx="170" cy="90" r="28" fill="#0d1f3a" stroke="#4d9cff" stroke-width="1.5"/>
+          <text x="170" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#4d9cff" font-weight="600">1</text>
+          <circle cx="300" cy="90" r="28" fill="#0d1f3a" stroke="#4d9cff" stroke-width="1.5"/>
+          <text x="300" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#4d9cff" font-weight="600">6</text>
+          <circle cx="300" cy="160" r="28" fill="#0d1f3a" stroke="#7c7f96" stroke-width="1"/>
+          <text x="300" y="164" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">3</text>
+          <circle cx="430" cy="90" r="28" fill="#0d1f3a" stroke="#7c7f96" stroke-width="1"/>
+          <text x="430" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">4</text>
+          <circle cx="562" cy="90" r="28" fill="#0d1f3a" stroke="#7c7f96" stroke-width="1"/>
+          <text x="562" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">5</text>
+
+          <text x="340" y="170" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">E = {1,2,3,4,5,6}   Γ = {(1,3),(1,6),(4,5),(5,5),(6,1),(6,3)}</text>
+          <text x="365" y="56" text-anchor="middle" font-family="Syne" font-size="11" fill="#f5a623">arc 6→1 (circuit !)</text>
+        </svg>
+      </div>
+
+      <div class="note">
+        <div class="note-label">À retenir</div>
+        <p>Dans cet exemple : E = [1,6] et Γ = {(1,3), (1,6), (4,5), (5,5), (6,1), (6,3)}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. VOCABULAIRE ===== -->
+  <section class="section" id="vocab">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--purple-bg);color:var(--purple)">02</div>
+      <div class="section-title">Vocabulaire essentiel</div>
+    </div>
+    <div class="section-body">
+      <div class="vocab-grid">
+        <div class="vocab-card">
+          <div class="vocab-term">Successeur Γ(x)</div>
+          <div class="vocab-desc">Les sommets vers lesquels x a une flèche. Γ(1) = {3, 6}</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Prédécesseur Γ⁻¹(x)</div>
+          <div class="vocab-desc">Les sommets qui ont une flèche vers x. Γ⁻¹(3) = {1, 6}</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Demi-degré intérieur dᵢ(x)</div>
+          <div class="vocab-desc">Nombre de flèches qui arrivent sur x. dᵢ(1) = 1</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Demi-degré extérieur dₑ(x)</div>
+          <div class="vocab-desc">Nombre de flèches qui partent de x. dₑ(1) = 2</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Degré d(x)</div>
+          <div class="vocab-desc">d(x) = dᵢ(x) + dₑ(x). Pour le sommet 1 : d(1) = 3</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Racine</div>
+          <div class="vocab-desc">Sommet sans prédécesseur (aucune flèche n'arrive dessus). Ex : 2, 4</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Feuille</div>
+          <div class="vocab-desc">Sommet sans successeur (aucune flèche ne part). Ex : 2, 3</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Sommet isolé</div>
+          <div class="vocab-desc">Aucune flèche ne part ni n'arrive. Degré = 0. Ex : 2</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Forêt</div>
+          <div class="vocab-desc">Graphe sans circuit où chaque sommet a au plus un prédécesseur</div>
+        </div>
+        <div class="vocab-card">
+          <div class="vocab-term">Arbre</div>
+          <div class="vocab-desc">Une forêt avec une seule racine</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. CHEMINS ===== -->
+  <section class="section" id="chemin">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--amber-bg);color:var(--amber)">03</div>
+      <div class="section-title">Chemins, circuits et boucles</div>
+    </div>
+    <div class="section-body">
+
+      <div class="def">
+        <div class="def-label">Chemin</div>
+        <p>Suite de flèches qui se suivent. Un chemin de longueur k passe par k arcs. On le code par la suite des sommets : (x₀, x₁, ..., xₖ).</p>
+      </div>
+
+      <div class="diagram-wrap">
+        <svg width="100%" viewBox="0 0 680 120">
+          <defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+          <line x1="114" y1="60" x2="196" y2="60" stroke="#f5a623" stroke-width="2.5" marker-end="url(#a2)"/>
+          <line x1="244" y1="60" x2="326" y2="60" stroke="#f5a623" stroke-width="2.5" marker-end="url(#a2)"/>
+          <line x1="374" y1="60" x2="456" y2="60" stroke="#f5a623" stroke-width="2.5" marker-end="url(#a2)"/>
+          <text x="155" y="42" text-anchor="middle" font-family="Syne" font-size="11" fill="#f5a623">flèche 1</text>
+          <text x="285" y="42" text-anchor="middle" font-family="Syne" font-size="11" fill="#f5a623">flèche 2</text>
+          <text x="415" y="42" text-anchor="middle" font-family="Syne" font-size="11" fill="#f5a623">flèche 3</text>
+          <circle cx="88" cy="60" r="26" fill="#2a1c05" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="88" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#f5a623" font-weight="600">A</text>
+          <circle cx="220" cy="60" r="26" fill="#2a1c05" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="220" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#f5a623" font-weight="600">B</text>
+          <circle cx="350" cy="60" r="26" fill="#2a1c05" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="350" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#f5a623" font-weight="600">C</text>
+          <circle cx="480" cy="60" r="26" fill="#2a1c05" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="480" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#f5a623" font-weight="600">D</text>
+          <text x="340" y="110" text-anchor="middle" font-family="Syne" font-size="12" fill="#7c7f96">Chemin (A, B, C, D) de longueur 3</text>
+        </svg>
+      </div>
+
+      <div class="vocab-grid">
+        <div class="vocab-card" style="border-left: 3px solid #4d9cff">
+          <div class="vocab-term" style="color:#4d9cff">Circuit</div>
+          <div class="vocab-desc">Chemin qui revient à son point de départ. Ex : (1, 6, 1). Le dernier sommet = le premier.</div>
+        </div>
+        <div class="vocab-card" style="border-left: 3px solid #ff5f5f">
+          <div class="vocab-term" style="color:#ff5f5f">Boucle</div>
+          <div class="vocab-desc">Circuit de longueur 1 : une flèche d'un sommet vers lui-même. Ex : (5, 5).</div>
+        </div>
+        <div class="vocab-card" style="border-left: 3px solid #3dd68c">
+          <div class="vocab-term" style="color:#3dd68c">Chemin simple</div>
+          <div class="vocab-desc">Chemin où tous les arcs sont distincts (pas de flèche répétée).</div>
+        </div>
+        <div class="vocab-card" style="border-left: 3px solid #a78bfa">
+          <div class="vocab-term" style="color:#a78bfa">Chemin élémentaire</div>
+          <div class="vocab-desc">Chemin où tous les sommets sont distincts. Plus restrictif que "simple".</div>
+        </div>
+      </div>
+
+      <div class="warn">
+        <div class="warn-label">Attention</div>
+        <p>Un chemin élémentaire est forcément simple, mais un chemin simple n'est pas forcément élémentaire.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 4. FERMETURE TRANSITIVE ===== -->
+  <section class="section" id="fermeture">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--teal-bg);color:var(--teal)">04</div>
+      <div class="section-title">Fermeture transitive Γ⁺</div>
+    </div>
+    <div class="section-body">
+
+      <div class="def">
+        <div class="def-label">Définition</div>
+        <p><strong>x Γ⁺ y</strong> signifie qu'il existe un chemin de longueur ≥ 1 de x à y (en passant par autant d'étapes qu'on veut).</p>
+      </div>
+
+      <div class="analogie">
+        <div class="analogie-label">En clair</div>
+        <p>La question est : "Peut-on atteindre B depuis A, même en passant par plusieurs villes intermédiaires ?" Si oui, alors A Γ⁺ B.</p>
+      </div>
+
+      <div class="formula">
+        Γ⁺ = Γ¹ ∨ Γ² ∨ Γ³ ∨ ... ∨ Γⁿ<br><br>
+        Γ* = Γ⁰ ∨ Γ¹ ∨ Γ² ∨ ... ∨ Γⁿ  (fermeture réflexive transitive, inclut x=x)
+      </div>
+
+      <div class="diagram-wrap">
+        <svg width="100%" viewBox="0 0 680 160">
+          <defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+          <line x1="134" y1="80" x2="216" y2="80" stroke="#7c7f96" stroke-width="1.5" marker-end="url(#a3)"/>
+          <line x1="284" y1="80" x2="366" y2="80" stroke="#7c7f96" stroke-width="1.5" marker-end="url(#a3)"/>
+          <path d="M134 60 Q250 20 366 60" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="6 3" marker-end="url(#a3)"/>
+          <path d="M134 55 Q300 5 516 55" fill="none" stroke="#3dd68c" stroke-width="2" stroke-dasharray="6 3" marker-end="url(#a3)"/>
+          <line x1="434" y1="80" x2="516" y2="80" stroke="#7c7f96" stroke-width="1.5" marker-end="url(#a3)"/>
+          <text x="250" y="18" text-anchor="middle" font-family="Syne" font-size="11" fill="#2dd4bf">A Γ⁺ C (via B)</text>
+          <text x="330" y="10" text-anchor="middle" font-family="Syne" font-size="11" fill="#3dd68c">A Γ⁺ D (via B et C)</text>
+          <circle cx="108" cy="80" r="26" fill="#0a2220" stroke="#2dd4bf" stroke-width="1.5"/>
+          <text x="108" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#2dd4bf" font-weight="600">A</text>
+          <circle cx="250" cy="80" r="26" fill="#16181f" stroke="#7c7f96" stroke-width="1"/>
+          <text x="250" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">B</text>
+          <circle cx="392" cy="80" r="26" fill="#16181f" stroke="#7c7f96" stroke-width="1"/>
+          <text x="392" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">C</text>
+          <circle cx="542" cy="80" r="26" fill="#16181f" stroke="#7c7f96" stroke-width="1"/>
+          <text x="542" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">D</text>
+          <text x="340" y="148" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">arcs directs ——     chemins indirects dans Γ⁺ - - -</text>
+        </svg>
+      </div>
+
+      <div class="note">
+        <div class="note-label">Calcul avec la matrice</div>
+        <p>On calcule M¹, M², ..., Mⁿ (multiplications booléennes : ∨ au lieu de +, ∧ au lieu de ×). Γ⁺ = M¹ ∨ M² ∨ ... ∨ Mⁿ. Complexité : O(n⁴).</p>
+      </div>
+
+      <div class="note">
+        <div class="note-label">Exemple du cours</div>
+        <p>Γ⁺ = {(1,1), (1,3), (1,6), (4,5), (5,5), (6,1), (6,3), (6,6)}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. FORTE CONNEXITÉ ===== -->
+  <section class="section" id="forte">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--green-bg);color:var(--green)">05</div>
+      <div class="section-title">Forte connexité</div>
+    </div>
+    <div class="section-body">
+
+      <div class="def">
+        <div class="def-label">Définition</div>
+        <p>Deux sommets x et y sont <strong>fortement connexes</strong> si x = y, OU s'il existe un chemin de x à y <strong>ET</strong> un chemin de y à x. On respecte le sens des flèches.</p>
+      </div>
+
+      <div class="analogie">
+        <div class="analogie-label">Analogie — appel téléphonique</div>
+        <p>A et B sont fortement connexes si A peut appeler B ET B peut appeler A. Si le numéro ne renvoie que dans un sens → pas fortement connexes.</p>
+      </div>
+
+      <div class="diagram-wrap">
+        <svg width="100%" viewBox="0 0 680 200">
+          <defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+          <rect x="30" y="30" width="190" height="155" rx="12" fill="none" stroke="#3dd68c" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="125" y="22" text-anchor="middle" font-family="Syne" font-size="11" fill="#3dd68c" font-weight="600">FORTEMENT CONNEXES</text>
+          <path d="M96 88 Q125 52 164 88" fill="none" stroke="#4d9cff" stroke-width="2" marker-end="url(#a4)"/>
+          <path d="M164 115 Q125 152 96 115" fill="none" stroke="#4d9cff" stroke-width="2" marker-end="url(#a4)"/>
+          <text x="125" y="50" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">1 → 6</text>
+          <text x="125" y="168" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">6 → 1</text>
+          <circle cx="82" cy="102" r="26" fill="#0b2618" stroke="#3dd68c" stroke-width="1.5"/>
+          <text x="82" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#3dd68c" font-weight="600">1</text>
+          <circle cx="178" cy="102" r="26" fill="#0b2618" stroke="#3dd68c" stroke-width="1.5"/>
+          <text x="178" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#3dd68c" font-weight="600">6</text>
+
+          <rect x="270" y="30" width="170" height="155" rx="12" fill="none" stroke="#ff5f5f" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="355" y="22" text-anchor="middle" font-family="Syne" font-size="11" fill="#ff5f5f" font-weight="600">PAS FORTEMENT CONNEXES</text>
+          <line x1="320" y1="102" x2="388" y2="102" stroke="#ff5f5f" stroke-width="2" marker-end="url(#a4)"/>
+          <text x="355" y="82" text-anchor="middle" font-family="Syne" font-size="11" fill="#ff5f5f">4 → 5  ✓</text>
+          <text x="355" y="145" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">5 → 4  ✗ impossible</text>
+          <circle cx="308" cy="102" r="26" fill="#2a0d0d" stroke="#ff5f5f" stroke-width="1.5"/>
+          <text x="308" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#ff5f5f" font-weight="600">4</text>
+          <circle cx="400" cy="102" r="26" fill="#2a0d0d" stroke="#ff5f5f" stroke-width="1.5"/>
+          <text x="400" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#ff5f5f" font-weight="600">5</text>
+
+          <rect x="490" y="55" width="140" height="105" rx="12" fill="none" stroke="#2a2d3a" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="560" y="47" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">SEUL</text>
+          <circle cx="560" cy="107" r="26" fill="#16181f" stroke="#2a2d3a" stroke-width="1"/>
+          <text x="560" y="111" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">2</text>
+          <text x="560" y="148" text-anchor="middle" font-family="Syne" font-size="11" fill="#3a3d52">aucune flèche</text>
+        </svg>
+      </div>
+
+      <div class="note">
+        <div class="note-label">Composantes fortement connexes — exemple du cours</div>
+        <p>Les classes d'équivalence sont : <strong>{1, 6}</strong> · <strong>{2}</strong> · <strong>{3}</strong> · <strong>{4}</strong> · <strong>{5}</strong></p>
+      </div>
+
+      <div class="comp-grid">
+        <div class="comp-badge" style="background:#0b2618;border:1px solid rgba(61,214,140,0.3);color:#3dd68c">{1, 6} — circuit 1↔6</div>
+        <div class="comp-badge" style="background:#16181f;border:1px solid var(--border);color:#7c7f96">{2} — isolé</div>
+        <div class="comp-badge" style="background:#16181f;border:1px solid var(--border);color:#7c7f96">{3} — feuille</div>
+        <div class="comp-badge" style="background:#16181f;border:1px solid var(--border);color:#7c7f96">{4} — sens unique vers 5</div>
+        <div class="comp-badge" style="background:#16181f;border:1px solid var(--border);color:#7c7f96">{5} — boucle seulement</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. CONNEXITÉ SIMPLE ===== -->
+  <section class="section" id="connexe">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--amber-bg);color:var(--amber)">06</div>
+      <div class="section-title">Connexité simple (graphe symétrisé)</div>
+    </div>
+    <div class="section-body">
+
+      <div class="def">
+        <div class="def-label">Définition</div>
+        <p>On <strong>ignore le sens des flèches</strong>. Le graphe symétrisé (E, Γ ∪ Γ⁻¹) ajoute pour chaque arc (x,y) son inverse (y,x). Une <strong>chaîne</strong> est un chemin dans ce graphe symétrisé — on peut se déplacer dans n'importe quel sens.</p>
+      </div>
+
+      <div class="analogie">
+        <div class="analogie-label">Analogie — routes sans sens interdit</div>
+        <p>Imagine qu'on efface tous les panneaux "sens unique". Tu peux maintenant conduire dans les deux sens sur toutes les routes. Les villes que tu peux atteindre forment une composante connexe.</p>
+      </div>
+
+      <div class="diagram-wrap">
+        <svg width="100%" viewBox="0 0 680 190">
+          <defs><marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+          <text x="145" y="22" text-anchor="middle" font-family="Syne" font-size="12" fill="#7c7f96" font-weight="600">Graphe original</text>
+          <line x1="110" y1="80" x2="178" y2="80" stroke="#7c7f96" stroke-width="1.5" marker-end="url(#a5)"/>
+          <line x1="210" y1="80" x2="88" y2="148" stroke="#7c7f96" stroke-width="1.5" marker-end="url(#a5)"/>
+          <circle cx="84" cy="80" r="24" fill="#0d1f3a" stroke="#4d9cff" stroke-width="1.5"/>
+          <text x="84" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#4d9cff" font-weight="600">1</text>
+          <circle cx="206" cy="80" r="24" fill="#16181f" stroke="#7c7f96" stroke-width="1"/>
+          <text x="206" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">6</text>
+          <circle cx="70" cy="162" r="24" fill="#16181f" stroke="#7c7f96" stroke-width="1"/>
+          <text x="70" y="166" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#7c7f96" font-weight="600">3</text>
+          <text x="145" y="185" text-anchor="middle" font-family="Syne" font-size="11" fill="#7c7f96">1→6 et 6→3</text>
+
+          <text x="340" y="95" text-anchor="middle" font-family="Syne" font-size="22" fill="#7c7f96">→</text>
+          <text x="340" y="112" text-anchor="middle" font-family="Syne" font-size="10" fill="#7c7f96">oublie les sens</text>
+
+          <text x="545" y="22" text-anchor="middle" font-family="Syne" font-size="12" fill="#2dd4bf" font-weight="600">Graphe symétrisé</text>
+          <rect x="420" y="35" width="250" height="148" rx="12" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="545" y="175" text-anchor="middle" font-family="Syne" font-size="11" fill="#2dd4bf">composante connexe {1, 3, 6}</text>
+          <line x1="480" y1="80" x2="548" y2="80" stroke="#2dd4bf" stroke-width="1.5" marker-end="url(#a5)"/>
+          <line x1="532" y1="80" x2="464" y2="80" stroke="#2dd4bf" stroke-width="1.5" marker-end="url(#a5)"/>
+          <line x1="552" y1="96" x2="496" y2="148" stroke="#2dd4bf" stroke-width="1.5" marker-end="url(#a5)"/>
+          <line x1="492" y1="140" x2="546" y2="92" stroke="#2dd4bf" stroke-width="1.5" marker-end="url(#a5)"/>
+          <circle cx="454" cy="80" r="24" fill="#0a2220" stroke="#2dd4bf" stroke-width="1.5"/>
+          <text x="454" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#2dd4bf" font-weight="600">1</text>
+          <circle cx="566" cy="80" r="24" fill="#0a2220" stroke="#2dd4bf" stroke-width="1.5"/>
+          <text x="566" y="84" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#2dd4bf" font-weight="600">6</text>
+          <circle cx="480" cy="155" r="24" fill="#0a2220" stroke="#2dd4bf" stroke-width="1.5"/>
+          <text x="480" y="159" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#2dd4bf" font-weight="600">3</text>
+        </svg>
+      </div>
+
+      <div class="note">
+        <div class="note-label">Composantes connexes — exemple du cours</div>
+        <p>En ignorant les sens : <strong>{1, 3, 6}</strong> · <strong>{2}</strong> · <strong>{4, 5}</strong></p>
+      </div>
+
+      <div class="retenir">
+        <div class="retenir-title">Différence clé à retenir</div>
+        <ul>
+          <li><strong>Forte connexité</strong> : sens des flèches respecté → groupes plus petits ou égaux</li>
+          <li><strong>Connexité simple</strong> : sens ignoré → groupes plus grands ou égaux</li>
+          <li>Toujours : composantes fortement connexes ⊆ composantes connexes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. REPRÉSENTATIONS ===== -->
+  <section class="section" id="representations">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--purple-bg);color:var(--purple)">07</div>
+      <div class="section-title">Représentations en mémoire</div>
+    </div>
+    <div class="section-body">
+
+      <div class="analogie">
+        <div class="analogie-label">Le graphe de référence pour tous les exemples</div>
+        <p>On utilise : sommets {A, B, C, D, E} et arcs A→B, A→C, B→D, D→E, E→E (boucle)</p>
+      </div>
+
+      <!-- Matrice booléenne -->
+      <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div style="padding:14px 20px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+          <span style="font-size:13px;font-weight:700;color:var(--blue)">1.</span>
+          <span style="font-size:14px;font-weight:700">Matrice booléenne</span>
+        </div>
+        <div style="padding:20px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+          <div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">M[i][j] = 1 si l'arc i→j existe, 0 sinon</p>
+            <div class="mat-wrap">
+              <table class="mat">
+                <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+                <tr><th>A</th><td class="c1">1</td><td class="c1">1</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td></tr>
+                <tr><th>B</th><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c1">1</td><td class="c0">0</td></tr>
+                <tr><th>C</th><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td></tr>
+                <tr><th>D</th><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c1">1</td></tr>
+                <tr><th>E</th><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td class="c1">1</td></tr>
+              </table>
+            </div>
+          </div>
+          <div style="flex:1;min-width:180px">
+            <p class="pro">+ Accès instantané O(1)</p>
+            <p class="pro">+ Calcul facile de Γ⁺ (multiplications de matrices)</p>
+            <p class="con">- Gaspille de la mémoire (beaucoup de zéros)</p>
+            <p class="con">- Difficile d'ajouter/supprimer des sommets</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrice d'incidence -->
+      <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div style="padding:14px 20px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+          <span style="font-size:13px;font-weight:700;color:var(--purple)">2.</span>
+          <span style="font-size:14px;font-weight:700">Matrice d'incidence aux arcs</span>
+        </div>
+        <div style="padding:20px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+          <div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Les colonnes sont les arcs. -1 = départ, +1 = arrivée, 0 = non concerné</p>
+            <div class="mat-wrap">
+              <table class="mat">
+                <tr><th></th><th>A→B</th><th>A→C</th><th>B→D</th><th>D→E</th><th>E→E</th></tr>
+                <tr><th>A</th><td style="background:#2a0d0d;color:#ff5f5f;font-weight:700">-1</td><td style="background:#2a0d0d;color:#ff5f5f;font-weight:700">-1</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td></tr>
+                <tr><th>B</th><td style="background:#0b2618;color:#3dd68c;font-weight:700">+1</td><td class="c0">0</td><td style="background:#2a0d0d;color:#ff5f5f;font-weight:700">-1</td><td class="c0">0</td><td class="c0">0</td></tr>
+                <tr><th>C</th><td class="c0">0</td><td style="background:#0b2618;color:#3dd68c;font-weight:700">+1</td><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td></tr>
+                <tr><th>D</th><td class="c0">0</td><td class="c0">0</td><td style="background:#0b2618;color:#3dd68c;font-weight:700">+1</td><td style="background:#2a0d0d;color:#ff5f5f;font-weight:700">-1</td><td class="c0">0</td></tr>
+                <tr><th>E</th><td class="c0">0</td><td class="c0">0</td><td class="c0">0</td><td style="background:#0b2618;color:#3dd68c;font-weight:700">+1</td><td style="background:#0b2618;color:#3dd68c;font-weight:700">+1</td></tr>
+              </table>
+            </div>
+          </div>
+          <div style="flex:1;min-width:180px">
+            <p class="pro">+ Compact si peu d'arcs et beaucoup de sommets</p>
+            <p class="con">- Peu pratique au quotidien</p>
+            <p class="con">- Difficile à modifier</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liste d'arcs -->
+      <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div style="padding:14px 20px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+          <span style="font-size:13px;font-weight:700;color:var(--amber)">3.</span>
+          <span style="font-size:14px;font-weight:700">Liste d'arcs</span>
+        </div>
+        <div style="padding:20px">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">On liste simplement tous les arcs un par un</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:14px"><span style="color:var(--blue)">A</span><span style="color:var(--muted)">→</span><span style="color:var(--green)">B</span></div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:14px"><span style="color:var(--blue)">A</span><span style="color:var(--muted)">→</span><span style="color:var(--green)">C</span></div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:14px"><span style="color:var(--blue)">B</span><span style="color:var(--muted)">→</span><span style="color:var(--green)">D</span></div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:14px"><span style="color:var(--blue)">D</span><span style="color:var(--muted)">→</span><span style="color:var(--green)">E</span></div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:14px"><span style="color:var(--blue)">E</span><span style="color:var(--muted)">→</span><span style="color:var(--green)">E</span></div>
+          </div>
+          <p class="pro">+ Très simple à comprendre</p>
+          <p class="con">- Chercher si un arc existe = parcourir toute la liste</p>
+        </div>
+      </div>
+
+      <!-- Liste d'adjacence -->
+      <div style="border:2px solid var(--green);border-radius:12px;overflow:hidden">
+        <div style="padding:14px 20px;background:var(--green-bg);border-bottom:1px solid rgba(61,214,140,0.2);display:flex;align-items:center;gap:12px">
+          <span style="font-size:13px;font-weight:700;color:var(--green)">4.</span>
+          <span style="font-size:14px;font-weight:700;color:var(--green)">Liste d'adjacence</span>
+          <span class="star">LA PLUS UTILISÉE</span>
+        </div>
+        <div style="padding:20px">
+          <p style="font-size:13px;color:#a8f0cd;margin-bottom:16px">Pour chaque sommet, on stocke la liste de ses successeurs — comme un carnet d'adresses</p>
+          <div class="adj-list">
+            <div class="adj-row">
+              <div class="adj-sommet">A</div>
+              <div class="adj-arrow">→</div>
+              <div class="adj-voisins"><span class="adj-voisin">B</span><span class="adj-voisin">C</span></div>
+            </div>
+            <div class="adj-row">
+              <div class="adj-sommet">B</div>
+              <div class="adj-arrow">→</div>
+              <div class="adj-voisins"><span class="adj-voisin">D</span></div>
+            </div>
+            <div class="adj-row">
+              <div class="adj-sommet">C</div>
+              <div class="adj-arrow">→</div>
+              <div class="adj-voisins"><span class="adj-vide">aucun successeur</span></div>
+            </div>
+            <div class="adj-row">
+              <div class="adj-sommet">D</div>
+              <div class="adj-arrow">→</div>
+              <div class="adj-voisins"><span class="adj-voisin">E</span></div>
+            </div>
+            <div class="adj-row">
+              <div class="adj-sommet">E</div>
+              <div class="adj-arrow">→</div>
+              <div class="adj-voisins"><span class="adj-voisin">E</span></div>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <p class="pro">+ Économique en mémoire (on ne stocke que les arcs qui existent)</p>
+            <p class="pro">+ Facile d'ajouter/supprimer des sommets ou des arcs</p>
+            <p class="pro">+ Idéale pour parcourir le graphe</p>
+            <p class="con">- Vérifier un arc précis est un peu plus lent qu'avec la matrice</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tableau de comparaison -->
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="compare-name" style="color:var(--blue)">Matrice booléenne</div>
+          <div style="font-size:12px;color:var(--muted)">Beaucoup d'arcs, accès rapide nécessaire</div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-name" style="color:var(--purple)">Matrice d'incidence</div>
+          <div style="font-size:12px;color:var(--muted)">Peu d'arcs, beaucoup de sommets</div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-name" style="color:var(--amber)">Liste d'arcs</div>
+          <div style="font-size:12px;color:var(--muted)">Structure ultra-simple, peu d'arcs</div>
+        </div>
+        <div class="compare-card best">
+          <div class="compare-name">Liste d'adjacence ⭐</div>
+          <div style="font-size:12px;color:#a8f0cd">Cas général — 90% des situations</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RÉCAP FINAL -->
+  <div class="retenir">
+    <div class="retenir-title">Récapitulatif — tout en un coup d'œil</div>
+    <ul>
+      <li><strong>Graphe orienté</strong> : points (sommets) + flèches (arcs)</li>
+      <li><strong>Successeur</strong> = "où on va depuis x" / <strong>Prédécesseur</strong> = "d'où on vient vers x"</li>
+      <li><strong>Chemin</strong> = suite de flèches qui se suivent</li>
+      <li><strong>Circuit</strong> = chemin qui revient au départ / <strong>Boucle</strong> = circuit de longueur 1</li>
+      <li><strong>Γ⁺</strong> = fermeture transitive : "qui peut atteindre qui, en plusieurs étapes ?"</li>
+      <li><strong>Forte connexité</strong> : A et B dans le même groupe ssi A↔B dans les deux sens (flèches respectées)</li>
+      <li><strong>Connexité simple</strong> : même chose mais on ignore le sens des flèches</li>
+      <li><strong>Représentation préférée</strong> : liste d'adjacence (économique + flexible)</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  Fiche de révision — Théorie des Graphes · Cours SDA2
+</footer>
+
+</body>
+</html>
